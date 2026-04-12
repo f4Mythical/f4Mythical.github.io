@@ -7,241 +7,405 @@
   <title>Polityka Prywatności – Hira & Kata</title>
   <style>
     :root {
-      --bg-main: #FAFAFA;
-      --bg-card: #FFFFFF;
-      --bg-light: #FFF3E0;
-      --text-heading: #E65100;
-      --text-body: #333333;
-      --text-muted: #999999;
-      --accent: #FF7043;
-      --accent-dark: #D84315;
-      --border-light: #FFCCBC;
-      --text-white: #FFFFFF;
+      --tlo-glowne: #FAFAFA;
+      --tlo-zakladki: #FFF3E0;
+      --tlo-powierzchnia: #FFFFFF;
+      --tekst-glowny: #E65100;
+      --tekst-dodatkowy: #999999;
+      --linia-glowna: #FF7043;
+      --linia-jasna: #FFCCBC;
+      --tekst-na-glownym: #FFFFFF;
+      --tekst-akcentowy: #D84315;
+      --szary-niezaznaczony: #757575;
+      --tekst-podstawowy: #333333;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-body);
-      line-height: 1.6;
-      padding: 20px;
+      background-color: var(--tlo-glowne);
+      color: var(--tekst-podstawowy);
+      line-height: 1.7;
+      padding: 24px 16px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .kana-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    }
+
+    .kana-bg span {
+      position: absolute;
+      color: #FF7043;
+      user-select: none;
+      line-height: 1;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 760px;
       margin: 0 auto;
-      background: var(--bg-card);
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(230, 81, 0, 0.08);
-      overflow: hidden;
       position: relative;
+      z-index: 1;
     }
 
     header {
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: var(--text-white);
-      padding: 40px 30px;
+      background: linear-gradient(160deg, #FF7043 0%, #E64A19 55%, #BF360C 100%);
+      border-radius: 20px;
+      color: var(--tekst-na-glownym);
+      padding: 48px 36px 40px;
       text-align: center;
       position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    header::before {
+      content: "ひらがな　カタカナ";
+      position: absolute;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      font-size: 72px;
+      color: rgba(255,255,255,0.05);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.15em;
     }
 
     .github-link {
       position: absolute;
-      top: 15px;
-      width: 32px;
-      height: 32px;
+      top: 16px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-white);
+      color: rgba(255,255,255,0.7);
       text-decoration: none;
-      opacity: 0.9;
-      transition: opacity 0.2s, transform 0.2s;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
 
     .github-link:hover {
-      opacity: 1;
-      transform: scale(1.1);
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.1);
     }
 
-    .github-link.left {
-      left: 15px;
-    }
+    .github-link.left { left: 16px; }
+    .github-link.right { right: 16px; }
+    .github-link svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .github-link.right {
-      right: 15px;
-    }
-
-    .github-link svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
+    .header-app-name {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+      position: relative;
     }
 
     header h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
+      font-size: 30px;
+      margin-bottom: 10px;
       font-weight: 700;
+      letter-spacing: -0.02em;
+      position: relative;
     }
 
     header .subtitle {
-      font-size: 14px;
-      opacity: 0.95;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      position: relative;
     }
 
     main {
-      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     section {
-      margin-bottom: 28px;
+      background: var(--tlo-powierzchnia);
+      border: 1px solid var(--linia-jasna);
+      border-radius: 16px;
+      padding: 28px 28px 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    section:hover {
+      border-color: var(--linia-glowna);
+      box-shadow: 0 2px 16px rgba(255, 112, 67, 0.08);
     }
 
     h2 {
-      font-size: 20px;
-      color: var(--text-heading);
+      font-size: 16px;
+      color: var(--tekst-glowny);
       margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--linia-jasna);
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
-    h2::before {
-      content: "";
-      display: inline-block;
-      width: 6px;
-      height: 24px;
-      background: var(--accent);
-      margin-right: 12px;
-      border-radius: 3px;
+    .section-num {
+      width: 26px;
+      height: 26px;
+      background: var(--tlo-zakladki);
+      border: 1px solid var(--linia-jasna);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--tekst-akcentowy);
+      flex-shrink: 0;
     }
 
     h3 {
-      font-size: 16px;
-      color: var(--accent-dark);
+      font-size: 12px;
+      color: var(--szary-niezaznaczony);
       margin: 18px 0 8px;
-      font-weight: 600;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    p, li {
+    p {
       margin-bottom: 10px;
+      font-size: 15px;
+      color: var(--tekst-podstawowy);
     }
+
+    p:last-child { margin-bottom: 0; }
 
     ul {
-      padding-left: 20px;
+      padding-left: 0;
       margin-bottom: 12px;
+      list-style: none;
     }
 
     li {
       margin-bottom: 6px;
+      font-size: 15px;
+      color: var(--tekst-podstawowy);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--linia-glowna);
+      opacity: 0.6;
     }
 
     .highlight {
-      color: var(--accent-dark);
+      color: var(--tekst-akcentowy);
       font-weight: 500;
-      background: var(--bg-light);
-      padding: 2px 6px;
-      border-radius: 4px;
+      background: var(--tlo-zakladki);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 13px;
     }
 
-    .placeholder {
-      background: var(--bg-light);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--accent-dark);
-      font-weight: 500;
-      border: 1px dashed var(--accent);
-    }
+    strong { color: var(--tekst-glowny); font-weight: 500; }
+
+    .muted { color: var(--szary-niezaznaczony); font-style: italic; }
 
     footer {
-      background: var(--bg-light);
-      padding: 20px 30px;
+      background: var(--tlo-powierzchnia);
+      border: 1px solid var(--linia-jasna);
+      border-radius: 16px;
+      padding: 20px 28px;
       text-align: center;
-      border-top: 1px solid var(--border-light);
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--tekst-dodatkowy);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
+    .footer-kana {
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      color: var(--linia-jasna);
+      font-size: 17px;
     }
 
     @media (max-width: 600px) {
-      body { padding: 10px; }
-      header { padding: 30px 20px; }
-      main { padding: 20px; }
+      body { padding: 12px 10px; }
+      header { padding: 36px 20px 28px; border-radius: 16px; }
       header h1 { font-size: 24px; }
-      h2 { font-size: 18px; }
-      .github-link {
-        width: 28px;
-        height: 28px;
-        top: 10px;
-      }
-      .github-link.left { left: 10px; }
-      .github-link.right { right: 10px; }
-      .github-link svg {
-        width: 20px;
-        height: 20px;
-      }
+      section { padding: 20px 16px; border-radius: 12px; }
+      h2 { font-size: 15px; }
     }
 
     @media print {
-      body { background: #fff; }
-      .container { box-shadow: none; }
-      header { background: #fff !important; color: #000 !important; }
-      .github-link { display: none; }
+      .kana-bg { display: none; }
+      section { border: 1px solid #eee; box-shadow: none; }
     }
   </style>
 </head>
 <body>
+
+  <div class="kana-bg">
+    <span style="left:11.0%;top:73.4%;font-size:21px;opacity:0.05;transform:rotate(-20deg)">表</span>
+    <span style="left:8.6%;top:41.8%;font-size:14px;opacity:0.06;transform:rotate(0deg)">プ</span>
+    <span style="left:55.6%;top:70.9%;font-size:35px;opacity:0.08;transform:rotate(-3deg)">き</span>
+    <span style="left:80.1%;top:0.6%;font-size:38px;opacity:0.10;transform:rotate(-8deg)">ア</span>
+    <span style="left:21.3%;top:75.6%;font-size:16px;opacity:0.07;transform:rotate(-7deg)">り</span>
+    <span style="left:59.8%;top:79.9%;font-size:36px;opacity:0.09;transform:rotate(24deg)">ツ</span>
+    <span style="left:7.8%;top:29.0%;font-size:32px;opacity:0.12;transform:rotate(-7deg)">ハ</span>
+    <span style="left:69.8%;top:4.5%;font-size:20px;opacity:0.07;transform:rotate(-21deg)">げ</span>
+    <span style="left:85.8%;top:37.6%;font-size:27px;opacity:0.12;transform:rotate(-17deg)">で</span>
+    <span style="left:20.7%;top:26.4%;font-size:42px;opacity:0.10;transform:rotate(5deg)">ト</span>
+    <span style="left:52.9%;top:24.2%;font-size:27px;opacity:0.06;transform:rotate(21deg)">わ</span>
+    <span style="left:21.7%;top:32.1%;font-size:37px;opacity:0.05;transform:rotate(16deg)">日</span>
+    <span style="left:39.7%;top:6.6%;font-size:41px;opacity:0.09;transform:rotate(11deg)">コ</span>
+    <span style="left:64.9%;top:39.2%;font-size:41px;opacity:0.08;transform:rotate(-12deg)">ぜ</span>
+    <span style="left:73.8%;top:53.4%;font-size:36px;opacity:0.08;transform:rotate(4deg)">ぶ</span>
+    <span style="left:21.7%;top:98.8%;font-size:29px;opacity:0.05;transform:rotate(-23deg)">ニ</span>
+    <span style="left:15.1%;top:15.8%;font-size:34px;opacity:0.09;transform:rotate(-6deg)">へ</span>
+    <span style="left:98.6%;top:52.4%;font-size:43px;opacity:0.12;transform:rotate(-24deg)">書</span>
+    <span style="left:67.5%;top:53.2%;font-size:21px;opacity:0.10;transform:rotate(-19deg)">ほ</span>
+    <span style="left:15.7%;top:0.3%;font-size:35px;opacity:0.10;transform:rotate(24deg)">ル</span>
+    <span style="left:50.3%;top:10.5%;font-size:32px;opacity:0.12;transform:rotate(0deg)">ん</span>
+    <span style="left:15.1%;top:75.5%;font-size:30px;opacity:0.11;transform:rotate(2deg)">ご</span>
+    <span style="left:59.3%;top:48.4%;font-size:16px;opacity:0.07;transform:rotate(24deg)">あ</span>
+    <span style="left:23.7%;top:23.8%;font-size:31px;opacity:0.05;transform:rotate(12deg)">ク</span>
+    <span style="left:96.8%;top:52.7%;font-size:17px;opacity:0.10;transform:rotate(22deg)">つ</span>
+    <span style="left:26.2%;top:86.4%;font-size:26px;opacity:0.06;transform:rotate(2deg)">ろ</span>
+    <span style="left:70.6%;top:39.5%;font-size:34px;opacity:0.07;transform:rotate(20deg)">ざ</span>
+    <span style="left:12.0%;top:22.2%;font-size:23px;opacity:0.09;transform:rotate(-13deg)">ヲ</span>
+    <span style="left:0.7%;top:70.1%;font-size:15px;opacity:0.05;transform:rotate(-23deg)">だ</span>
+    <span style="left:7.0%;top:23.6%;font-size:34px;opacity:0.06;transform:rotate(-18deg)">セ</span>
+    <span style="left:57.0%;top:24.1%;font-size:28px;opacity:0.08;transform:rotate(-20deg)">習</span>
+    <span style="left:42.7%;top:41.9%;font-size:27px;opacity:0.11;transform:rotate(9deg)">統</span>
+    <span style="left:9.7%;top:39.9%;font-size:24px;opacity:0.12;transform:rotate(-13deg)">文</span>
+    <span style="left:53.1%;top:13.9%;font-size:19px;opacity:0.08;transform:rotate(19deg)">ぐ</span>
+    <span style="left:43.9%;top:85.3%;font-size:30px;opacity:0.04;transform:rotate(25deg)">と</span>
+    <span style="left:95.9%;top:91.7%;font-size:39px;opacity:0.05;transform:rotate(-1deg)">え</span>
+    <span style="left:85.6%;top:89.3%;font-size:18px;opacity:0.04;transform:rotate(-5deg)">ぜ</span>
+    <span style="left:28.2%;top:69.0%;font-size:36px;opacity:0.11;transform:rotate(8deg)">ン</span>
+    <span style="left:15.3%;top:29.4%;font-size:43px;opacity:0.09;transform:rotate(2deg)">ズ</span>
+    <span style="left:5.7%;top:57.8%;font-size:29px;opacity:0.12;transform:rotate(-17deg)">コ</span>
+    <span style="left:7.9%;top:18.4%;font-size:31px;opacity:0.10;transform:rotate(-13deg)">デ</span>
+    <span style="left:93.2%;top:56.4%;font-size:31px;opacity:0.04;transform:rotate(-21deg)">ま</span>
+    <span style="left:57.8%;top:51.8%;font-size:42px;opacity:0.06;transform:rotate(11deg)">統</span>
+    <span style="left:26.3%;top:13.0%;font-size:33px;opacity:0.08;transform:rotate(21deg)">ば</span>
+    <span style="left:0.9%;top:61.5%;font-size:30px;opacity:0.05;transform:rotate(2deg)">て</span>
+    <span style="left:26.3%;top:92.4%;font-size:40px;opacity:0.12;transform:rotate(-7deg)">ヅ</span>
+    <span style="left:43.4%;top:53.8%;font-size:22px;opacity:0.13;transform:rotate(15deg)">る</span>
+    <span style="left:0.8%;top:80.9%;font-size:22px;opacity:0.10;transform:rotate(22deg)">ベ</span>
+    <span style="left:26.2%;top:88.1%;font-size:36px;opacity:0.05;transform:rotate(-11deg)">も</span>
+    <span style="left:71.0%;top:20.2%;font-size:33px;opacity:0.06;transform:rotate(-1deg)">ず</span>
+    <span style="left:9.1%;top:41.9%;font-size:22px;opacity:0.04;transform:rotate(14deg)">せ</span>
+    <span style="left:97.0%;top:16.0%;font-size:27px;opacity:0.10;transform:rotate(3deg)">表</span>
+    <span style="left:7.4%;top:87.4%;font-size:41px;opacity:0.09;transform:rotate(17deg)">へ</span>
+    <span style="left:54.7%;top:42.5%;font-size:14px;opacity:0.07;transform:rotate(22deg)">言</span>
+    <span style="left:89.0%;top:20.8%;font-size:21px;opacity:0.05;transform:rotate(14deg)">さ</span>
+    <span style="left:96.4%;top:74.2%;font-size:42px;opacity:0.06;transform:rotate(-17deg)">メ</span>
+    <span style="left:87.3%;top:2.5%;font-size:36px;opacity:0.07;transform:rotate(22deg)">ん</span>
+    <span style="left:26.4%;top:78.0%;font-size:16px;opacity:0.12;transform:rotate(18deg)">ぶ</span>
+    <span style="left:19.8%;top:90.9%;font-size:24px;opacity:0.11;transform:rotate(19deg)">だ</span>
+    <span style="left:2.3%;top:19.1%;font-size:23px;opacity:0.12;transform:rotate(23deg)">ぢ</span>
+    <span style="left:34.8%;top:50.4%;font-size:34px;opacity:0.12;transform:rotate(-8deg)">ア</span>
+    <span style="left:11.4%;top:96.1%;font-size:19px;opacity:0.13;transform:rotate(-12deg)">く</span>
+    <span style="left:59.1%;top:34.2%;font-size:37px;opacity:0.08;transform:rotate(24deg)">ふ</span>
+    <span style="left:38.1%;top:57.1%;font-size:21px;opacity:0.10;transform:rotate(-25deg)">ほ</span>
+    <span style="left:68.0%;top:93.1%;font-size:36px;opacity:0.06;transform:rotate(-3deg)">パ</span>
+    <span style="left:61.7%;top:65.7%;font-size:17px;opacity:0.12;transform:rotate(0deg)">セ</span>
+    <span style="left:32.3%;top:69.0%;font-size:30px;opacity:0.06;transform:rotate(8deg)">メ</span>
+    <span style="left:67.1%;top:89.4%;font-size:32px;opacity:0.07;transform:rotate(2deg)">ヒ</span>
+    <span style="left:30.1%;top:20.8%;font-size:37px;opacity:0.09;transform:rotate(-9deg)">あ</span>
+    <span style="left:43.8%;top:21.2%;font-size:28px;opacity:0.12;transform:rotate(15deg)">ロ</span>
+    <span style="left:65.2%;top:28.1%;font-size:34px;opacity:0.10;transform:rotate(-20deg)">わ</span>
+    <span style="left:66.6%;top:22.2%;font-size:19px;opacity:0.04;transform:rotate(-13deg)">ど</span>
+    <span style="left:60.5%;top:76.1%;font-size:27px;opacity:0.12;transform:rotate(4deg)">ゴ</span>
+    <span style="left:48.9%;top:24.2%;font-size:33px;opacity:0.04;transform:rotate(13deg)">フ</span>
+    <span style="left:77.1%;top:21.7%;font-size:38px;opacity:0.10;transform:rotate(-2deg)">ふ</span>
+    <span style="left:24.7%;top:84.0%;font-size:27px;opacity:0.11;transform:rotate(8deg)">日</span>
+    <span style="left:58.9%;top:94.1%;font-size:41px;opacity:0.10;transform:rotate(11deg)">本</span>
+    <span style="left:42.2%;top:89.8%;font-size:27px;opacity:0.05;transform:rotate(18deg)">ヅ</span>
+    <span style="left:25.7%;top:24.5%;font-size:33px;opacity:0.11;transform:rotate(1deg)">ヲ</span>
+    <span style="left:23.7%;top:43.5%;font-size:35px;opacity:0.06;transform:rotate(-8deg)">識</span>
+    <span style="left:8.0%;top:14.9%;font-size:25px;opacity:0.05;transform:rotate(-14deg)">ピ</span>
+    <span style="left:40.4%;top:53.7%;font-size:26px;opacity:0.06;transform:rotate(-4deg)">ヤ</span>
+    <span style="left:93.7%;top:1.9%;font-size:40px;opacity:0.09;transform:rotate(-1deg)">言</span>
+    <span style="left:29.6%;top:38.6%;font-size:41px;opacity:0.12;transform:rotate(2deg)">ト</span>
+    <span style="left:79.2%;top:88.9%;font-size:28px;opacity:0.06;transform:rotate(-1deg)">プ</span>
+    <span style="left:33.3%;top:67.2%;font-size:26px;opacity:0.05;transform:rotate(-2deg)">ヘ</span>
+    <span style="left:97.1%;top:52.9%;font-size:41px;opacity:0.09;transform:rotate(8deg)">む</span>
+    <span style="left:63.6%;top:13.4%;font-size:27px;opacity:0.04;transform:rotate(-6deg)">に</span>
+    <span style="left:45.0%;top:33.4%;font-size:40px;opacity:0.07;transform:rotate(23deg)">ぜ</span>
+    <span style="left:25.0%;top:8.1%;font-size:14px;opacity:0.09;transform:rotate(25deg)">ユ</span>
+  </div>
+
   <div class="container">
     <header>
       <a href="https://github.com/f4Mythical" target="_blank" rel="noopener noreferrer" class="github-link left" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       </a>
-      
+
+      <div class="header-app-name">Hira &amp; Kata</div>
       <h1>Polityka Prywatności</h1>
-      <div class="subtitle">Aplikacja Hira & Kata • Ostatnia aktualizacja: <span class="placeholder">[DATA]</span></div>
-      
+
       <a href="https://github.com/f4Mythical" target="_blank" rel="noopener noreferrer" class="github-link right" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       </a>
+
+      <div class="subtitle">Ostatnia aktualizacja: <span style="color:rgba(255,255,255,0.4);font-style:italic">[DATA]</span></div>
     </header>
-    
+
     <main>
       <section>
-        <h2>1. Informacje ogólne</h2>
-        <p>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych w aplikacji mobilnej <strong>Hira & Kata</strong> (dalej: „Aplikacja").</p>
+        <h2><span class="section-num">1</span> Informacje ogólne</h2>
+        <p>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych w aplikacji mobilnej <strong>Hira &amp; Kata</strong> (dalej: „Aplikacja").</p>
         <p>Administratorem danych jest:<br>
-        <span class="placeholder">[IMIĘ I NAZWISKO / NAZWA FIRMY]</span><br>
-        E-mail: <span class="placeholder">[EMAIL KONTAKTOWY]</span></p>
+        <span class="muted">[IMIĘ I NAZWISKO / NAZWA FIRMY]</span><br>
+        E-mail: <span class="muted">[EMAIL KONTAKTOWY]</span></p>
         <p>Korzystanie z Aplikacji oznacza akceptację niniejszej Polityki.</p>
       </section>
 
       <section>
-        <h2>2. Jakie dane zbieramy</h2>
-        <h3>Dane podawane przez użytkownika:</h3>
+        <h2><span class="section-num">2</span> Jakie dane zbieramy</h2>
+        <h3>Dane podawane przez użytkownika</h3>
         <ul>
           <li>adres e-mail</li>
           <li>nick (nazwa użytkownika)</li>
         </ul>
-        <h3>Dane związane z korzystaniem z aplikacji:</h3>
+        <h3>Dane związane z korzystaniem z aplikacji</h3>
         <ul>
           <li>identyfikator użytkownika (UID)</li>
           <li>postęp nauki (np. streak, wykonane zadania)</li>
           <li>data ostatniej aktywności</li>
           <li>ustawienia aplikacji</li>
         </ul>
-        <h3>Dane techniczne:</h3>
+        <h3>Dane techniczne</h3>
         <ul>
           <li>podstawowe informacje o urządzeniu i systemie (np. wersja systemu)</li>
           <li>informacje o działaniu aplikacji (w celach technicznych)</li>
@@ -249,7 +413,7 @@
       </section>
 
       <section>
-        <h2>3. W jakim celu przetwarzamy dane</h2>
+        <h2><span class="section-num">3</span> W jakim celu przetwarzamy dane</h2>
         <p>Dane są przetwarzane w celu:</p>
         <ul>
           <li>umożliwienia logowania i korzystania z konta</li>
@@ -261,7 +425,7 @@
       </section>
 
       <section>
-        <h2>4. Podstawa prawna przetwarzania</h2>
+        <h2><span class="section-num">4</span> Podstawa prawna przetwarzania</h2>
         <p>Dane przetwarzane są zgodnie z:</p>
         <ul>
           <li><span class="highlight">art. 6 ust. 1 lit. b RODO</span> – wykonanie usługi (konto i funkcje aplikacji)</li>
@@ -271,7 +435,7 @@
       </section>
 
       <section>
-        <h2>5. Przechowywanie danych</h2>
+        <h2><span class="section-num">5</span> Przechowywanie danych</h2>
         <p>Dane są przechowywane:</p>
         <ul>
           <li>przez okres korzystania z konta</li>
@@ -280,13 +444,13 @@
       </section>
 
       <section>
-        <h2>6. Usuwanie danych</h2>
+        <h2><span class="section-num">6</span> Usuwanie danych</h2>
         <p>Użytkownik może w każdej chwili usunąć konto w aplikacji.<br>
         Usunięcie konta powoduje trwałe usunięcie powiązanych danych.</p>
       </section>
 
       <section>
-        <h2>7. Udostępnianie danych</h2>
+        <h2><span class="section-num">7</span> Udostępnianie danych</h2>
         <p>Dane mogą być przetwarzane przez zewnętrznych dostawców usług wyłącznie w zakresie niezbędnym do działania aplikacji, w szczególności:</p>
         <ul>
           <li><strong>Google Firebase (Google LLC)</strong> – uwierzytelnianie użytkowników oraz baza danych</li>
@@ -295,13 +459,13 @@
       </section>
 
       <section>
-        <h2>8. Powiadomienia</h2>
+        <h2><span class="section-num">8</span> Powiadomienia</h2>
         <p>Aplikacja może wysyłać powiadomienia przypominające o nauce.<br>
         Użytkownik może je w każdej chwili wyłączyć w ustawieniach systemu.</p>
       </section>
 
       <section>
-        <h2>9. Prawa użytkownika</h2>
+        <h2><span class="section-num">9</span> Prawa użytkownika</h2>
         <p>Użytkownik ma prawo do:</p>
         <ul>
           <li>dostępu do swoich danych</li>
@@ -314,7 +478,7 @@
       </section>
 
       <section>
-        <h2>10. Bezpieczeństwo danych</h2>
+        <h2><span class="section-num">10</span> Bezpieczeństwo danych</h2>
         <p>Dane są przetwarzane z wykorzystaniem odpowiednich środków bezpieczeństwa, w tym:</p>
         <ul>
           <li>szyfrowanych połączeń (HTTPS)</li>
@@ -323,19 +487,19 @@
       </section>
 
       <section>
-        <h2>11. Zmiany polityki prywatności</h2>
+        <h2><span class="section-num">11</span> Zmiany polityki prywatności</h2>
         <p>Polityka może być aktualizowana.<br>
         Aktualna wersja będzie dostępna w aplikacji lub pod wskazanym linkiem.</p>
       </section>
 
       <section>
-        <h2>12. Kontakt</h2>
+        <h2><span class="section-num">12</span> Kontakt</h2>
         <p>W sprawach związanych z danymi osobowymi:<br>
-        📧 <span class="placeholder">[EMAIL KONTAKTOWY]</span></p>
+        📧 <span class="muted">[EMAIL KONTAKTOWY]</span></p>
       </section>
 
       <section>
-        <h2>13. Funkcja syntezy mowy (Text-to-Speech)</h2>
+        <h2><span class="section-num">13</span> Funkcja syntezy mowy (Text-to-Speech)</h2>
         <p>Aplikacja korzysta z systemowej funkcji syntezy mowy (Text-to-Speech), aby odtwarzać wymowę znaków i słów.</p>
         <p>W tym celu:</p>
         <ul>
@@ -349,12 +513,12 @@
     </main>
 
     <footer>
-      &copy; <span id="year"></span> Hira & Kata. Wszelkie prawa zastrzeżone.
+      <span class="footer-kana">平仮名</span>
+      <span>&copy; <span id="yr"></span> Hira &amp; Kata. Wszelkie prawa zastrzeżone.</span>
+      <span class="footer-kana">片仮名</span>
     </footer>
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
