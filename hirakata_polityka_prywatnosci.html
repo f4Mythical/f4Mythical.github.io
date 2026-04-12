@@ -36,6 +36,7 @@
       border-radius: 16px;
       box-shadow: 0 4px 24px rgba(230, 81, 0, 0.08);
       overflow: hidden;
+      position: relative;
     }
 
     header {
@@ -43,6 +44,40 @@
       color: var(--text-white);
       padding: 40px 30px;
       text-align: center;
+      position: relative;
+    }
+
+    .github-link {
+      position: absolute;
+      top: 15px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-white);
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .github-link:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .github-link.left {
+      left: 15px;
+    }
+
+    .github-link.right {
+      right: 15px;
+    }
+
+    .github-link svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
     }
 
     header h1 {
@@ -146,26 +181,46 @@
       main { padding: 20px; }
       header h1 { font-size: 24px; }
       h2 { font-size: 18px; }
+      .github-link {
+        width: 28px;
+        height: 28px;
+        top: 10px;
+      }
+      .github-link.left { left: 10px; }
+      .github-link.right { right: 10px; }
+      .github-link svg {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     @media print {
       body { background: #fff; }
       .container { box-shadow: none; }
       header { background: #fff !important; color: #000 !important; }
+      .github-link { display: none; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
+      <a href="https://github.com/f4Mythical" target="_blank" rel="noopener noreferrer" class="github-link left" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      
       <h1>Polityka Prywatności</h1>
       <div class="subtitle">Aplikacja Hira & Kata • Ostatnia aktualizacja: <span class="placeholder">[DATA]</span></div>
+      
+      <a href="https://github.com/f4Mythical" target="_blank" rel="noopener noreferrer" class="github-link right" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
     </header>
     
     <main>
       <section>
         <h2>1. Informacje ogólne</h2>
-        <p>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych w aplikacji mobilnej <strong>Hira & Kata</strong> (dalej: „Aplikacja”).</p>
+        <p>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych w aplikacji mobilnej <strong>Hira & Kata</strong> (dalej: „Aplikacja").</p>
         <p>Administratorem danych jest:<br>
         <span class="placeholder">[IMIĘ I NAZWISKO / NAZWA FIRMY]</span><br>
         E-mail: <span class="placeholder">[EMAIL KONTAKTOWY]</span></p>
@@ -277,6 +332,19 @@
         <h2>12. Kontakt</h2>
         <p>W sprawach związanych z danymi osobowymi:<br>
         📧 <span class="placeholder">[EMAIL KONTAKTOWY]</span></p>
+      </section>
+
+      <section>
+        <h2>13. Funkcja syntezy mowy (Text-to-Speech)</h2>
+        <p>Aplikacja korzysta z systemowej funkcji syntezy mowy (Text-to-Speech), aby odtwarzać wymowę znaków i słów.</p>
+        <p>W tym celu:</p>
+        <ul>
+          <li>wykorzystywany jest mechanizm TTS dostępny w systemie Android</li>
+          <li>użytkownik może zostać poproszony o pobranie pakietów językowych (np. języka japońskiego)</li>
+        </ul>
+        <p>Usługa TTS może być dostarczana przez zewnętrznych dostawców, np. Google.<br>
+        W takim przypadku przetwarzanie danych odbywa się zgodnie z polityką prywatności danego dostawcy.</p>
+        <p>Aplikacja nie nagrywa ani nie przechowuje głosu użytkownika.</p>
       </section>
     </main>
 
