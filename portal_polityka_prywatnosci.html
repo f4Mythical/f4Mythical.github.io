@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal - Polityka Prywatności</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --surface2: #1a1a1a;
+      --border: #222;
+      --accent: #BB86FC;
+      --accent2: #7c4dff;
+      --text: #e8e8e8;
+      --muted: #666;
+      --muted2: #444;
+      --danger: #CF6679;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .blob {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(187,134,252,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: blobDrift 18s ease-in-out infinite alternate;
+    }
+    .blob-1 { top: -100px; right: -100px; }
+    .blob-2 { bottom: -100px; left: -200px; animation-delay: -9s; background: radial-gradient(circle, rgba(124,77,255,0.06) 0%, transparent 70%); }
+
+    @keyframes blobDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(40px, 60px) scale(1.1); }
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(13,13,13,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--accent); }
+      50%       { opacity: 0.5; box-shadow: 0 0 4px var(--accent); }
+    }
+
+    .header-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+
+    .hero {
+      margin-bottom: 64px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+      margin: 48px 0;
+      opacity: 0.3;
+    }
+
+    section {
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    section:nth-child(2) { animation-delay: 0.1s; }
+    section:nth-child(3) { animation-delay: 0.15s; }
+    section:nth-child(4) { animation-delay: 0.2s; }
+    section:nth-child(5) { animation-delay: 0.25s; }
+    section:nth-child(6) { animation-delay: 0.3s; }
+    section:nth-child(7) { animation-delay: 0.35s; }
+
+    h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    p {
+      font-size: 15px;
+      color: #aaa;
+      margin-bottom: 12px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--text); font-weight: 500; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--muted2);
+      background: var(--surface2);
+    }
+
+    .card-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .card p { margin: 0; font-size: 14px; }
+
+    .highlight {
+      background: rgba(187,134,252,0.06);
+      border: 1px solid rgba(187,134,252,0.2);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+
+    .highlight p { color: #bbb; margin: 0; font-size: 14px; }
+
+    .warn {
+      background: rgba(207,102,121,0.06);
+      border: 1px solid rgba(207,102,121,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warn p { color: #b08090; font-size: 14px; margin: 0; }
+
+    ul {
+      list-style: none;
+      margin: 12px 0;
+    }
+
+    ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '—';
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .contact-link:hover { border-color: var(--accent); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .back-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 50;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    .back-top.visible { opacity: 1; transform: translateY(0); }
+    .back-top:hover { border-color: var(--accent); }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .header-tag { display: none; }
+      main { padding: 100px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <header>
+    <a href="#" class="logo">
+      <span class="logo-dot"></span>
+      PORTAL
+    </a>
+    <span class="header-tag">Polityka Prywatności</span>
+  </header>
+
+  <main>
+    <div class="hero">
+      <span class="hero-label">Dokument prawny</span>
+      <h1>Polityka<br/><span>Prywatności</span></h1>
+      <div class="hero-meta">
+        <span class="badge">Wersja 1.0</span>
+        <span class="badge">Maj 2025</span>
+        <span class="badge">Portal for Android</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <section>
+      <h2>Wstęp</h2>
+      <p>
+        Aplikacja <strong>Portal</strong> została zaprojektowana z myślą o minimalizmie i prywatności. Nie zbieramy żadnych danych osobowych — nie wymagamy imienia, adresu e-mail, numeru telefonu ani żadnych innych danych identyfikujących użytkownika.
+      </p>
+      <div class="highlight">
+        <p>Portal działa w oparciu o anonimowe uwierzytelnianie Firebase. Każde urządzenie otrzymuje losowy identyfikator — bez żadnego powiązania z tożsamością użytkownika.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Jakie dane zbieramy</h2>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Anonimowy UID (Firebase Auth)</div>
+        <p>Każde urządzenie otrzymuje losowy, unikalny identyfikator wygenerowany przez Firebase Auth. Nie jest on powiązany z żadnymi danymi osobowymi.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Nick użytkownika</div>
+        <p>Możesz ustawić dowolny pseudonim widoczny w czacie portalu. Nick przechowywany jest w Firestore i może być zmieniony w dowolnym momencie.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Wiadomości czatu</div>
+        <p>Wiadomości wysyłane w sesji portalu są przechowywane w Firestore jako część dokumentu portalu i są widoczne dla wszystkich uczestników danego portalu.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Zdjęcia</div>
+        <p>Zdjęcia przesyłane przez użytkowników są przechowywane w Firebase Storage. Każde zdjęcie jest dostępne dla wszystkich uczestników portalu poprzez publiczny URL.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Dane portalu</div>
+        <p>Kod portalu, data utworzenia, data wygaśnięcia, liczba podbić oraz znacznik ostatniej aktywności są przechowywane w Firestore na potrzeby funkcjonowania usługi.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Czego NIE zbieramy</h2>
+      <ul>
+        <li>Imię, nazwisko, adres e-mail ani numer telefonu</li>
+        <li>Lokalizacja GPS ani inne dane geolokalizacyjne</li>
+        <li>Dane urządzenia (model, IMEI) poza techniczną nazwą urządzenia wyświetlaną w sesji</li>
+        <li>Historia przeglądania, dane reklam ani profile behawioralne</li>
+        <li>Żadne dane sprzedawane stronom trzecim</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Jak używamy danych</h2>
+      <p>Zgromadzone dane służą wyłącznie do:</p>
+      <ul>
+        <li>Umożliwienia działania sesji portalu (wymiana wiadomości i zdjęć)</li>
+        <li>Weryfikacji właściciela portalu i uprawnień do zarządzania</li>
+        <li>Automatycznego czyszczenia nieaktywnych lub wygasłych portali</li>
+        <li>Wyświetlania historii portali, do których dołączono z danego urządzenia</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Przechowywanie i usuwanie danych</h2>
+      <p>
+        Portal automatycznie usuwa dane po wygaśnięciu sesji. Nieaktywne portale są usuwane przez Firebase Cloud Functions według następujących reguł:
+      </p>
+      <ul>
+        <li><strong>5 minut</strong> — portale, które nigdy nie miały uczestników ani aktywności</li>
+        <li><strong>3 dni</strong> — portale bez żadnej aktywności przez 3 doby</li>
+        <li><strong>30 dni</strong> — standardowy czas życia portalu od momentu utworzenia</li>
+      </ul>
+      <div class="warn">
+        <p>Po usunięciu portalu wszystkie powiązane wiadomości i zdjęcia są trwale usuwane z Firebase Storage i Firestore.</p>
+      </div>
+      <p>
+        Właściciel portalu może usunąć go ręcznie w każdej chwili z poziomu panelu ustawień w aplikacji.
+      </p>
+    </section>
+
+    <section>
+      <h2>Usługi zewnętrzne</h2>
+      <p>Aplikacja korzysta z usług Firebase (Google LLC). Przetwarzanie danych odbywa się zgodnie z <a href="https://firebase.google.com/support/privacy" class="contact-link" target="_blank">Polityką Prywatności Firebase ↗</a>.</p>
+
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Firebase Authentication</div>
+        <p>Anonimowe logowanie — bez danych osobowych.</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Firebase Firestore</div>
+        <p>Baza danych portali, wiadomości i historii. Serwery w UE/USA zgodnie z konfiguracją projektu.</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Firebase Storage</div>
+        <p>Przechowywanie zdjęć przesyłanych przez użytkowników.</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-title-dot"></span>Firebase Cloud Functions</div>
+        <p>Automatyczne czyszczenie wygasłych portali i powiązanych zasobów.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Uprawnienia aplikacji</h2>
+      <ul>
+        <li><strong>READ_EXTERNAL_STORAGE / READ_MEDIA_IMAGES</strong> — wyłącznie do wyboru zdjęć przez użytkownika z galerii urządzenia. Aplikacja nie uzyskuje automatycznego dostępu do galerii.</li>
+        <li><strong>WRITE_EXTERNAL_STORAGE</strong> (Android &lt; 10) — do zapisywania pobranych zdjęć do galerii urządzenia.</li>
+        <li><strong>INTERNET</strong> — do komunikacji z Firebase.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Prawa użytkownika</h2>
+      <p>Ponieważ nie posiadamy żadnych danych osobowych powiązanych z tożsamością, tradycyjne prawa RODO dotyczące dostępu i usunięcia danych osobowych mają ograniczone zastosowanie. Możesz jednak:</p>
+      <ul>
+        <li>Usunąć swój portal i wszystkie powiązane dane bezpośrednio z aplikacji</li>
+        <li>Zmienić lub usunąć swój nick w dowolnym momencie</li>
+        <li>Odinstalować aplikację — anonimowy UID zostanie porzucony bez możliwości identyfikacji</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Kontakt</h2>
+      <p>W przypadku pytań dotyczących prywatności w aplikacji Portal:</p>
+      <a href="https://github.com/f4Mythical" class="contact-link" target="_blank">↗ github.com/f4Mythical</a>
+    </section>
+
+    <div class="divider"></div>
+
+    <section>
+      <p style="font-family:'Space Mono',monospace; font-size:12px; color:var(--muted); letter-spacing:0.05em;">
+        Niniejsza polityka prywatności może być aktualizowana. Zmiany będą publikowane w repozytorium projektu. Ostatnia aktualizacja: <strong style="color:var(--text)">Maj 2025</strong>.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Portal · <a href="https://github.com/f4Mythical" target="_blank">@f4Mythical</a></p>
+  </footer>
+
+  <a href="#" class="back-top" id="backTop" title="Wróć na górę">↑</a>
+
+  <script>
+    const btn = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 300);
+    });
+  </script>
+
+</body>
+</html>
