@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal - Pobierz aplikację</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #111;
+      --surface2: #181818;
+      --surface3: #1e1e1e;
+      --border: #1f1f1f;
+      --border2: #2a2a2a;
+      --accent: #BB86FC;
+      --accent2: #9b59ff;
+      --accent-dim: rgba(187,134,252,0.15);
+      --text: #f0f0f0;
+      --muted: #555;
+      --muted2: #888;
+      --green: #4ecca3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(187,134,252,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(187,134,252,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+    }
+    .glow-1 {
+      width: 600px; height: 600px;
+      top: -200px; right: -100px;
+      background: radial-gradient(circle, rgba(187,134,252,0.10) 0%, transparent 60%);
+      animation: glowMove1 20s ease-in-out infinite alternate;
+    }
+    .glow-2 {
+      width: 400px; height: 400px;
+      bottom: 0; left: -100px;
+      background: radial-gradient(circle, rgba(124,77,255,0.08) 0%, transparent 60%);
+      animation: glowMove2 15s ease-in-out infinite alternate;
+    }
+    @keyframes glowMove1 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-60px, 80px) scale(1.15); }
+    }
+    @keyframes glowMove2 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(80px, -40px) scale(1.1); }
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-ring {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      position: relative;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    .logo-ring::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: corePulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(187,134,252,0.4); }
+      50%       { box-shadow: 0 0 0 6px rgba(187,134,252,0); }
+    }
+    @keyframes corePulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .header-clock {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--muted2);
+      transition: color 0.3s;
+    }
+
+    .header-clock:hover { color: var(--accent); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeSlideUp 0.7s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.35s ease forwards;
+    }
+
+    .hero-title .line1 { display: block; color: var(--text); }
+    .hero-title .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(187,134,252,0.5);
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--muted2);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.5s ease forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dl-wrap {
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.65s ease forwards;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 36px;
+      background: var(--accent);
+      color: #000;
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-download::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(187,134,252,0.35);
+    }
+    .btn-download:hover::before { opacity: 1; }
+
+    .btn-download:active { transform: translateY(0); }
+
+    .btn-download svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px 28px;
+      background: transparent;
+      color: var(--muted2);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .version-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.8s ease forwards;
+    }
+
+    .version-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 5px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      color: var(--muted2);
+    }
+
+    .version-badge.green {
+      border-color: rgba(78,204,163,0.3);
+      color: var(--green);
+      background: rgba(78,204,163,0.06);
+    }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 56px;
+      letter-spacing: -0.02em;
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .feat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.25s, transform 0.25s, background 0.25s;
+      cursor: default;
+    }
+
+    .feat-card:hover {
+      border-color: rgba(187,134,252,0.3);
+      background: var(--surface2);
+      transform: translateY(-4px);
+    }
+
+    .feat-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(187,134,252,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feat-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feat-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .feat-desc {
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.6;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2) 30%, var(--border2) 70%, transparent);
+      margin: 0 auto;
+      max-width: 960px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--surface);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .step:hover { background: var(--surface2); }
+
+    .step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.6;
+    }
+
+    .specs {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .spec-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-row:hover { background: var(--surface2); }
+
+    .spec-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--muted2);
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .spec-val {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .spec-val.accent { color: var(--accent); }
+
+    .github-cta {
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .github-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 48px 64px;
+      max-width: 520px;
+      width: 100%;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .github-card:hover {
+      border-color: rgba(187,134,252,0.3);
+      transform: translateY(-4px);
+    }
+
+    .github-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .github-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--accent);
+    }
+
+    .github-handle {
+      font-family: 'Space Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .github-sub {
+      font-size: 14px;
+      color: var(--muted2);
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 28px;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+
+    .btn-github:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(187,134,252,0.4);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, border-color 0.2s;
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 0 16px; }
+      .header-clock { display: none; }
+      .hero-title { font-size: 52px; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .github-card { padding: 32px 24px; }
+      .spec-key { width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="cursor-ring" id="cursor"></div>
+
+  <header>
+    <a href="#" class="logo">
+      <span class="logo-ring"></span>
+      PORTAL
+    </a>
+    <div id="clock" class="header-clock">00:00:00</div>
+    <nav>
+      <a href="#features">Funkcje</a>
+      <a href="#specs">Wymagania</a>
+      <a href="privacy.html">Prywatność</a>
+      <a href="https://github.com/f4Mythical" target="_blank">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="hero-eyebrow">Aplikacja Android · v1.0</span>
+    <h1 class="hero-title">
+      <span class="line1">Połącz</span>
+      <span class="line2">Urządzenia</span>
+    </h1>
+    <p class="hero-subtitle">
+      Udostępniaj zdjęcia i wiadomości między urządzeniami w czasie rzeczywistym. Bez konta. Bez rejestracji. Tylko kod portalu.
+    </p>
+
+    <div class="dl-wrap">
+      <div class="btn-row">
+        <a href="Portal.apk" class="btn-download" id="dlBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Pobierz Portal APK
+        </a>
+        <a href="https://github.com/f4Mythical" target="_blank" class="btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          Kod źródłowy
+        </a>
+      </div>
+    </div>
+
+    <div class="version-row">
+      <span class="version-badge green">● Stabilna</span>
+      <span class="version-badge">Android 7.0+</span>
+      <span class="version-badge">~8 MB</span>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <div class="section" id="features">
+    <p class="section-label reveal">Co oferuje Portal</p>
+    <h2 class="section-title reveal">Wszystko czego potrzebujesz<br/>do szybkiej wymiany</h2>
+
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="feat-title">Błyskawiczne połączenie</div>
+        <p class="feat-desc">Wygeneruj kod i udostępnij go. Drugie urządzenie dołącza w sekundy - zero konfiguracji.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+        </div>
+        <div class="feat-title">Galeria współdzielona</div>
+        <p class="feat-desc">Przesyłaj zdjęcia widoczne dla wszystkich uczestników portalu. Fullscreen viewer z blur tłem.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div class="feat-title">Czat w czasie rzeczywistym</div>
+        <p class="feat-desc">Wiadomości synchronizowane natychmiast przez Firebase Firestore. Żadnych opóźnień.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+            <circle cx="12" cy="16" r="1"/>
+          </svg>
+        </div>
+        <div class="feat-title">Ochrona hasłem</div>
+        <p class="feat-desc">Zabezpiecz portal hasłem - tylko osoby z kodem i hasłem uzyskają dostęp.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="feat-title">Automatyczne wygasanie</div>
+        <p class="feat-desc">Portale żyją 30 dni i automatycznie znikają. Możesz je przedłużyć do 10 razy.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <div class="feat-title">5 języków</div>
+        <p class="feat-desc">Polski, English, Deutsch, Español, Français - przełącz w dowolnym momencie.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <p class="section-label reveal">Jak to działa</p>
+    <h2 class="section-title reveal">Trzy kroki<br/>do połączenia</h2>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01 --</div>
+        <div class="step-title">Utwórz portal</div>
+        <p class="step-desc">Naciśnij przycisk. Aplikacja generuje unikalny 6-znakowy kod (np. PT3847).</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02 --</div>
+        <div class="step-title">Udostępnij kod</div>
+        <p class="step-desc">Przekaż kod ustnie, przez SMS lub pokaż ekran. Drugie urządzenie wpisuje go w pole wejścia.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03 --</div>
+        <div class="step-title">Wymień pliki</div>
+        <p class="step-desc">Oboje jesteście w sesji. Wysyłajcie zdjęcia i wiadomości bez żadnych limitów czasu połączenia.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04 --</div>
+        <div class="step-title">Portal znika sam</div>
+        <p class="step-desc">Po 30 dniach (lub wcześniej jeśli nieaktywny) portal i wszystkie dane są automatycznie usuwane.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section" id="specs">
+    <p class="section-label reveal">Wymagania systemowe</p>
+    <h2 class="section-title reveal">Specyfikacja</h2>
+
+    <div class="specs reveal">
+      <div class="spec-row">
+        <span class="spec-key">System</span>
+        <span class="spec-val">Android 7.0 Nougat (API 24) lub nowszy</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Docelowe SDK</span>
+        <span class="spec-val accent">Android 15 (API 36)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Rozmiar APK</span>
+        <span class="spec-val">~8 MB</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Internet</span>
+        <span class="spec-val">Wymagany (Wi-Fi lub dane mobilne)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Uprawnienia</span>
+        <span class="spec-val">Dostęp do galerii (opcjonalnie do przesyłania zdjęć)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Architektura</span>
+        <span class="spec-val">ARM64, ARM32, x86_64</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Backend</span>
+        <span class="spec-val accent">Firebase (Firestore + Auth + Storage)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="github-cta reveal">
+    <a href="https://github.com/f4Mythical" target="_blank" class="github-card" style="text-decoration:none;">
+      <div class="github-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="github-handle">@f4Mythical</div>
+        <div class="github-sub">Autor i deweloper Portalu</div>
+      </div>
+      <span class="btn-github">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Odwiedź profil GitHub
+      </span>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2026 Portal · Stworzone przez @f4Mythical</span>
+    <div class="footer-links">
+      <a href="privacy.html">Polityka Prywatności</a>
+      <a href="https://github.com/f4Mythical" target="_blank">GitHub</a>
+      <a href="README.md" target="_blank">README</a>
+    </div>
+  </footer>
+
+  <script>
+    function tick() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    const ring = document.getElementById('cursor');
+    let mx = -100, my = -100, cx = -100, cy = -100;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+    });
+
+    (function animCursor() {
+      cx += (mx - cx) * 0.12;
+      cy += (my - cy) * 0.12;
+      ring.style.left = cx + 'px';
+      ring.style.top  = cy + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+
+    document.querySelectorAll('a, button, .feat-card, .step, .spec-row').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(187,134,252,0.7)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '32px';
+        ring.style.height = '32px';
+        ring.style.borderColor = 'rgba(187,134,252,0.4)';
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('dlBtn').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.style.cssText = `
+        position:absolute;
+        width:4px; height:4px;
+        background:rgba(0,0,0,0.3);
+        border-radius:50%;
+        left:${e.clientX - rect.left}px;
+        top:${e.clientY - rect.top}px;
+        transform:translate(-50%,-50%) scale(0);
+        animation: ripple 0.5s ease-out forwards;
+        pointer-events:none;
+      `;
+      if (!document.getElementById('ripple-style')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-style';
+        style.textContent = '@keyframes ripple { to { transform:translate(-50%,-50%) scale(80); opacity:0; } }';
+        document.head.appendChild(style);
+      }
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 500);
+    });
+
+    document.querySelector('.logo').addEventListener('click', function(e) {
+      e.preventDefault();
+      const chars = 'PORTAL';
+      let code = '';
+      const used = [];
+      while (used.length < 2) {
+        const i = Math.floor(Math.random() * 6);
+        if (!used.includes(i)) { used.push(i); code += chars[i]; }
+      }
+      for (let i = 0; i < 4; i++) code += Math.floor(Math.random() * 10);
+
+      const flash = document.createElement('div');
+      flash.textContent = code;
+      flash.style.cssText = `
+        position:fixed; top:50%; left:50%;
+        transform:translate(-50%,-50%) scale(0.8);
+        font-family:'Space Mono',monospace;
+        font-size:clamp(36px,8vw,72px);
+        font-weight:700;
+        letter-spacing:0.2em;
+        color:#BB86FC;
+        text-shadow: 0 0 60px rgba(187,134,252,0.6);
+        z-index:9999;
+        pointer-events:none;
+        opacity:0;
+        transition: opacity 0.3s, transform 0.3s;
+      `;
+      document.body.appendChild(flash);
+      requestAnimationFrame(() => {
+        flash.style.opacity = '1';
+        flash.style.transform = 'translate(-50%,-50%) scale(1)';
+      });
+      setTimeout(() => {
+        flash.style.opacity = '0';
+        flash.style.transform = 'translate(-50%,-50%) scale(1.2)';
+        setTimeout(() => flash.remove(), 400);
+      }, 1800);
+    });
+  </script>
+</body>
+</html>
