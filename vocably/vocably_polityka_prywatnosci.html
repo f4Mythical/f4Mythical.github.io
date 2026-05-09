@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polityka Prywatnosci - Vocably</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0F0F11;
+    --surface: #1A1A1F;
+    --elevated: #1E1E24;
+    --gold: #B2A584;
+    --accent: #e8c84a;
+    --text: #E5E5E5;
+    --muted: #58534C;
+    --divider: #2e2e36;
+    --red: #F44336;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  .glow {
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(178,165,132,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  header {
+    margin-bottom: 72px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid rgba(178,165,132,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .meta {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .bar {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 32px 0;
+  }
+
+  .intro {
+    font-size: 15px;
+    color: rgba(229,229,229,0.7);
+    max-width: 560px;
+    line-height: 1.9;
+  }
+
+  section {
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  section:nth-child(1) { animation-delay: 0.1s; }
+  section:nth-child(2) { animation-delay: 0.15s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.25s; }
+  section:nth-child(5) { animation-delay: 0.3s; }
+  section:nth-child(6) { animation-delay: 0.35s; }
+  section:nth-child(7) { animation-delay: 0.4s; }
+  section:nth-child(8) { animation-delay: 0.45s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-num {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: rgba(229,229,229,0.72);
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  ul {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  ul li {
+    color: rgba(229,229,229,0.72);
+    font-size: 14px;
+    padding: 6px 0 6px 20px;
+    position: relative;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  ul li:last-child { border-bottom: none; }
+
+  ul li::before {
+    content: '-';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    margin-bottom: 0;
+  }
+
+  .highlight {
+    background: linear-gradient(135deg, rgba(232,200,74,0.08), rgba(178,165,132,0.05));
+    border: 1px solid rgba(232,200,74,0.2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight p {
+    color: rgba(229,229,229,0.85);
+    margin-bottom: 0;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,200,74,0.3);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  a:hover {
+    color: #fff;
+    border-color: rgba(232,200,74,0.8);
+  }
+
+  footer {
+    margin-top: 96px;
+    padding-top: 32px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .footer-meta {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="glow"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="tag">Vocably</div>
+    <h1>Polityka<br><em>Prywatnosci</em></h1>
+    <div class="bar"></div>
+    <p class="intro">Dokument opisuje, jakie dane zbiera aplikacja Vocably, w jakim celu oraz jakie prawa przysluguja uzytkownikowi.</p>
+    <p class="meta">Ostatnia aktualizacja: maj 2025</p>
+  </header>
+
+  <section>
+    <div class="section-num">01</div>
+    <h2>Administrator danych</h2>
+    <p>Administratorem danych osobowych uzytkownikow aplikacji Vocably jest jej tworca - osoba fizyczna dostepna pod adresem:</p>
+    <div class="card">
+      <div class="card-title">Kontakt</div>
+      <p><a href="https://github.com/f4Mythical" target="_blank" rel="noopener">github.com/f4Mythical</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-num">02</div>
+    <h2>Zbierane dane</h2>
+    <p>Aplikacja zbiera nastepujace dane w celu prawidlowego dzialania uslug:</p>
+    <ul>
+      <li>Adres e-mail podany podczas rejestracji</li>
+      <li>Data zalozenia konta (generowana automatycznie)</li>
+      <li>Unikalny identyfikator uzytkownika (UID) nadawany przez Firebase Authentication</li>
+      <li>Dane sesji nauki (wybrany jezyk, podrecznik, rozdzial, tryb, kierunek tlumaczenia) przechowywane lokalnie na urzadzeniu</li>
+      <li>Tresc feedbacku przeslanego dobrowolnie przez uzytkownika (m.in. kategoria, opis, ewentualne zdjecia w formie URI)</li>
+    </ul>
+    <p>Aplikacja nie zbiera danych lokalizacyjnych, danych biometrycznych ani informacji o innych aplikacjach na urzadzeniu.</p>
+  </section>
+
+  <section>
+    <div class="section-num">03</div>
+    <h2>Cel przetwarzania danych</h2>
+    <p>Dane sa przetwarzane wylacznie w nastepujacych celach:</p>
+    <ul>
+      <li>Uwierzytelnianie uzytkownika i zarzadzanie kontem</li>
+      <li>Przechowywanie historii ostatnich sesji nauki (lokalnie na urzadzeniu)</li>
+      <li>Obsluga systemu feedbacku i zgloszen bledow</li>
+      <li>Kontrola wersji aplikacji i wymuszanie aktualizacji</li>
+      <li>Tworzenie konta uzytkownika w bazie danych Firestore</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-num">04</div>
+    <h2>Uzycie Firebase</h2>
+    <p>Aplikacja korzysta z uslug Google Firebase, co oznacza, ze czesc danych jest przetwarzana przez serwery Google zgodnie z ich polityka prywatnosci.</p>
+    <div class="card">
+      <div class="card-title">Firebase Authentication</div>
+      <p>Sluzy do logowania i rejestracji uzytkownikow na podstawie adresu e-mail i hasla.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Cloud Firestore</div>
+      <p>Przechowuje dane konta (e-mail, data rejestracji) oraz zgloszone przez uzytkownikow opinie i feedbacki.</p>
+    </div>
+    <p>Polityka prywatnosci Google dostepna jest pod adresem <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+  </section>
+
+  <section>
+    <div class="section-num">05</div>
+    <h2>Przechowywanie danych lokalnych</h2>
+    <p>Nastepujace dane sa przechowywane wylacznie na urzadzeniu uzytkownika (SharedPreferences) i nie sa wyslane na serwery:</p>
+    <ul>
+      <li>Ostatnie sesje nauki (maks. 3 wpisy)</li>
+      <li>Ulubione tryby nauki per jezyk</li>
+      <li>Wybrany kierunek tlumaczenia per jezyk</li>
+      <li>Tymczasowy stan wstrzymanej sesji (fiszki)</li>
+    </ul>
+    <p>Dane te sa usuwane wraz z odinstalowaniem aplikacji lub wyczyszczeniem danych aplikacji w ustawieniach urzadzenia.</p>
+  </section>
+
+  <section>
+    <div class="section-num">06</div>
+    <h2>Udostepnianie danych</h2>
+    <div class="highlight">
+      <p>Dane uzytkownikow nie sa sprzedawane ani udostepniane podmiotom trzecim w celach komercyjnych. Jedynymi odbiorcami danych sa uslugodawcy technologiczni niezbedni do dzialania aplikacji - w tym Google Firebase.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-num">07</div>
+    <h2>Prawa uzytkownika</h2>
+    <p>Uzytkownik ma prawo do:</p>
+    <ul>
+      <li>Dostepu do swoich danych osobowych</li>
+      <li>Sprostowania nieprawidlowych danych</li>
+      <li>Usuniecia konta i powiazanych danych (opcja dostepna bezposrednio w aplikacji w sekcji Profil)</li>
+      <li>Wylogowania sie z konta w dowolnym momencie</li>
+    </ul>
+    <p>Usuniecie konta przez aplikacje powoduje usuniecie dokumentu uzytkownika z Firestore oraz usuniecie konta z Firebase Authentication.</p>
+  </section>
+
+  <section>
+    <div class="section-num">08</div>
+    <h2>Bezpieczenstwo</h2>
+    <p>Hasla uzytkownikow sa przechowywane w formie zaszyfrowanej przez Firebase Authentication - aplikacja nigdy nie ma dostepu do surowego hasla. Polaczenie z serwerami Firebase odbywa sie przez szyfrowane protokoly HTTPS.</p>
+  </section>
+
+  <section>
+    <div class="section-num">09</div>
+    <h2>Zmiany w polityce prywatnosci</h2>
+    <p>Polityka prywatnosci moze byc aktualizowana wraz z rozwojem aplikacji. O istotnych zmianach uzytkownik zostanie poinformowany poprzez aktualizacje aplikacji lub system wersjonowania wbudowany w Vocably. Data ostatniej zmiany widoczna jest na gorze tego dokumentu.</p>
+  </section>
+
+  <section>
+    <div class="section-num">10</div>
+    <h2>Kontakt</h2>
+    <p>W przypadku pytan dotyczacych przetwarzania danych osobowych lub realizacji praw uzytkownika, prosimy o kontakt przez GitHub:</p>
+    <div class="card">
+      <div class="card-title">GitHub</div>
+      <p><a href="https://github.com/f4Mythical" target="_blank" rel="noopener">github.com/f4Mythical</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-brand">Vocably</span>
+    <span class="footer-meta">Polityka Prywatnosci - 2025</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
