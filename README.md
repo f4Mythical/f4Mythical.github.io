@@ -37,7 +37,7 @@
 | Typ | Link | Adres |
 |-----|------|-------|
 | 🔒 Polityka prywatności | [Polityka Prywatności Vocably](https://f4Mythical.github.io/vocably/privacy.html) | `f4Mythical.github.io/vocably/privacy.html` |
-| ⬇️ Pobieranie | - brak strony pobierania - | `nie skonfigurowano` |
+| ⬇️ Pobieranie | [Pobierz Vocably APK](https://f4Mythical.github.io/vocably/download.html) | `f4Mythical.github.io/vocably/download.html` |
 | ℹ️ Opis aplikacji | - brak strony opisu - | `nie skonfigurowano` |
 
 [↑ Powrót do góry](#f4mythical--nawigacja)
