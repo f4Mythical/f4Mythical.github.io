@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vocably - Pobierz aplikację</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0F0F11;
+      --surface: #1A1A1F;
+      --surface2: #1E1E24;
+      --border: #252429;
+      --border2: #2e2e36;
+      --accent: #e8c84a;
+      --gold: #B2A584;
+      --accent-dim: rgba(232,200,74,0.12);
+      --text: #E5E5E5;
+      --muted: #58534C;
+      --muted2: #7a7468;
+      --green: #4CAF50;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232,200,74,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,200,74,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(90px);
+    }
+    .glow-1 {
+      width: 600px; height: 500px;
+      top: -200px; right: -100px;
+      background: radial-gradient(circle, rgba(232,200,74,0.08) 0%, transparent 60%);
+      animation: glowMove1 22s ease-in-out infinite alternate;
+    }
+    .glow-2 {
+      width: 400px; height: 400px;
+      bottom: 0; left: -100px;
+      background: radial-gradient(circle, rgba(178,165,132,0.06) 0%, transparent 60%);
+      animation: glowMove2 16s ease-in-out infinite alternate;
+    }
+    @keyframes glowMove1 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-50px, 70px) scale(1.12); }
+    }
+    @keyframes glowMove2 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(60px, -40px) scale(1.08); }
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(15,15,17,0.88);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-ring {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      position: relative;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    .logo-ring::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: corePulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,200,74,0.4); }
+      50%       { box-shadow: 0 0 0 5px rgba(232,200,74,0); }
+    }
+    @keyframes corePulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+
+    .header-clock {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--muted2);
+      transition: color 0.3s;
+    }
+    .header-clock:hover { color: var(--accent); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeSlideUp 0.7s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(52px, 11vw, 104px);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.35s ease forwards;
+    }
+
+    .hero-title .line1 { display: block; color: var(--text); }
+    .hero-title .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,200,74,0.45);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted2);
+      max-width: 460px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.5s ease forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .dl-wrap {
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.65s ease forwards;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 36px;
+      background: var(--accent);
+      color: #0F0F11;
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-download::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(232,200,74,0.28);
+    }
+    .btn-download:hover::before { opacity: 1; }
+    .btn-download:active { transform: translateY(0); }
+    .btn-download svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 28px;
+      background: transparent;
+      color: var(--muted2);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .version-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 32px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.8s ease forwards;
+    }
+
+    .version-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      color: var(--muted2);
+    }
+
+    .version-badge.green {
+      border-color: rgba(76,175,80,0.3);
+      color: var(--green);
+      background: rgba(76,175,80,0.06);
+    }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 52px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .feat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.25s, transform 0.25s, background 0.25s;
+      cursor: default;
+    }
+
+    .feat-card:hover {
+      border-color: rgba(232,200,74,0.25);
+      background: var(--surface2);
+      transform: translateY(-4px);
+    }
+
+    .feat-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(232,200,74,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .feat-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feat-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .feat-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted2);
+      line-height: 1.7;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2) 30%, var(--border2) 70%, transparent);
+      margin: 0 auto;
+      max-width: 960px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--surface);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .step:hover { background: var(--surface2); }
+
+    .step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .step-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted2);
+      line-height: 1.7;
+    }
+
+    .specs {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .spec-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-row:hover { background: var(--surface2); }
+
+    .spec-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted2);
+      width: 180px;
+      flex-shrink: 0;
+    }
+
+    .spec-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .spec-val.accent { color: var(--accent); }
+
+    .github-cta {
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .github-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 18px;
+      padding: 48px 64px;
+      max-width: 520px;
+      width: 100%;
+      transition: border-color 0.3s, transform 0.3s;
+      text-decoration: none;
+    }
+
+    .github-card:hover {
+      border-color: rgba(232,200,74,0.3);
+      transform: translateY(-4px);
+    }
+
+    .github-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .github-icon svg {
+      width: 26px; height: 26px;
+      fill: var(--accent);
+    }
+
+    .github-handle {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .github-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted2);
+    }
+
+    .btn-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 26px;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    }
+
+    .btn-github:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(232,200,74,0.35);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, border-color 0.2s;
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 0 16px; }
+      .header-clock { display: none; }
+      .hero-title { font-size: 54px; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .github-card { padding: 32px 24px; }
+      .spec-key { width: 120px; }
+      nav a:not(:last-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="cursor-ring" id="cursor"></div>
+
+  <header>
+    <a href="#" class="logo">
+      <span class="logo-ring"></span>
+      Vocably
+    </a>
+    <div id="clock" class="header-clock">00:00:00</div>
+    <nav>
+      <a href="#features">Funkcje</a>
+      <a href="#specs">Wymagania</a>
+      <a href="privacy.html">Prywatnosc</a>
+      <a href="https://github.com/f4Mythical" target="_blank">GitHub -></a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <span class="hero-eyebrow">Aplikacja Android - v1.0.3</span>
+    <h1 class="hero-title">
+      <span class="line1">Ucz sie</span>
+      <span class="line2">Slowek</span>
+    </h1>
+    <p class="hero-subtitle">
+      Nauka slowek z podrecznikow szkolnych przez fiszki, quizy i interaktywne tryby. Angielski i Niemiecki w jednym miejscu.
+    </p>
+
+    <div class="dl-wrap">
+      <div class="btn-row">
+        <a href="Vocably.apk" class="btn-download" id="dlBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Pobierz Vocably APK
+        </a>
+        <a href="https://github.com/f4Mythical" target="_blank" class="btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          Profil GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="version-row">
+      <span class="version-badge green">- Stabilna</span>
+      <span class="version-badge">Android 7.0+</span>
+      <span class="version-badge">Darmowa</span>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <div class="section" id="features">
+    <p class="section-label reveal">Co oferuje Vocably</p>
+    <h2 class="section-title reveal">Wszystko do nauki<br/>slowek z podrecznika</h2>
+
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div class="feat-title">Fiszki</div>
+        <p class="feat-desc">Klasyczne fiszki z animacja przesuwania. Swipe w prawo - znam, swipe w lewo - nie znam. Powtorek nieznanych na koniec.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="feat-title">Wybor odpowiedzi</div>
+        <p class="feat-desc">Cztery opcje do wyboru. Aplikacja losuje bledne odpowiedzi z puli slowek z tego samego rozdzialu.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <div class="feat-title">Wpisywanie</div>
+        <p class="feat-desc">Wbudowana klawiatura z polskimi znakami i niemieckimi (a, o, u, sz). Dla niemieckiego takze skroty der/die/das.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <div class="feat-title">Der, die, das?</div>
+        <p class="feat-desc">Tryb tylko dla niemieckiego. Pokazuje rzeczownik, wciskasz poprawny rodzajnik. Idealne cwiczenie gramatyki.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+        </div>
+        <div class="feat-title">Memory</div>
+        <p class="feat-desc">Dobieranie par slowek. Siatki 2x2, 3x2, 4x2, 4x4. Licznik ruchow i timer. Zagraj jeszcze raz po skonczeniu.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="feat-title">Szybkie fiszki</div>
+        <p class="feat-desc">Fiszki z licznikiem czasu. Kazde slowko dostaje okno czasowe proporcjonalne do ilosci slowek w sesji.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="feat-title">Szybka odpowiedz</div>
+        <p class="feat-desc">Slowka przewijaja sie automatycznie z regulowanym tempem (1-10s). Swipe aby pomin. Naucz sie pod presja czasu.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div class="feat-title">Wiecej trybow</div>
+        <p class="feat-desc">Litera po literze, Ukladanka, Prawda czy falsz, Slowo po slowie, Wyszukiwarka, Lista slowek. Razem 14 trybow nauki.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section">
+    <p class="section-label reveal">Jak to dziala</p>
+    <h2 class="section-title reveal">Cztery kroki<br/>do nauki</h2>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01 -</div>
+        <div class="step-title">Wybierz jezyk</div>
+        <p class="step-desc">Angielski (Focus) lub Niemiecki (Trends). Jezyk zapamieta Twoj wybor kierunku tlumaczenia.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02 -</div>
+        <div class="step-title">Wybierz material</div>
+        <p class="step-desc">Wybierz podrecznik, rozdzial i podrozdzialy. Wszystkie sa domyslnie zaznaczone - mozesz je odfiltrowac.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03 -</div>
+        <div class="step-title">Ustaw kierunek</div>
+        <p class="step-desc">Jezyk do Polskiego, Polski do Jezyka lub Losowo. Ustawienie jest zapamietywane osobno dla kazdego jezyka.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04 -</div>
+        <div class="step-title">Cwicz</div>
+        <p class="step-desc">Wybierz tryb i zacznij. Ostatnie sesje sa zapisywane na ekranie glownym - wroc do nich jednym kliknieciem.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="section" id="specs">
+    <p class="section-label reveal">Wymagania systemowe</p>
+    <h2 class="section-title reveal">Specyfikacja</h2>
+
+    <div class="specs reveal">
+      <div class="spec-row">
+        <span class="spec-key">System</span>
+        <span class="spec-val">Android 7.0 Nougat (API 24) lub nowszy</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Docelowe SDK</span>
+        <span class="spec-val accent">Android 15 (API 36)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Internet</span>
+        <span class="spec-val">Wymagany do logowania i feedbacku</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Uprawnienia</span>
+        <span class="spec-val">Dostep do galerii (opcjonalnie - feedback ze zdjeciem)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Jezyki</span>
+        <span class="spec-val accent">Angielski (Focus 1-4), Niemiecki (Trends 1-4)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Tryby nauki</span>
+        <span class="spec-val">14 trybow, w tym Der die das? tylko dla DE</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">Backend</span>
+        <span class="spec-val accent">Firebase (Auth + Firestore)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="github-cta reveal">
+    <a href="https://github.com/f4Mythical" target="_blank" class="github-card">
+      <div class="github-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="github-handle">@f4Mythical</div>
+        <div class="github-sub">Autor i deweloper Vocably</div>
+      </div>
+      <span class="btn-github">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Odwiedz profil GitHub
+      </span>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-copy">2026 Vocably - @f4Mythical</span>
+    <div class="footer-links">
+      <a href="privacy.html">Polityka Prywatnosci</a>
+      <a href="https://github.com/f4Mythical" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+  <script>
+    function tick() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    const ring = document.getElementById('cursor');
+    let mx = -100, my = -100, cx = -100, cy = -100;
+
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    (function animCursor() {
+      cx += (mx - cx) * 0.12;
+      cy += (my - cy) * 0.12;
+      ring.style.left = cx + 'px';
+      ring.style.top  = cy + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+
+    document.querySelectorAll('a, button, .feat-card, .step, .spec-row').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '52px';
+        ring.style.height = '52px';
+        ring.style.borderColor = 'rgba(232,200,74,0.65)';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '30px';
+        ring.style.height = '30px';
+        ring.style.borderColor = 'rgba(232,200,74,0.35)';
+      });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.getElementById('dlBtn').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.style.cssText = 'position:absolute;width:4px;height:4px;background:rgba(0,0,0,0.3);border-radius:50%;left:' + (e.clientX - rect.left) + 'px;top:' + (e.clientY - rect.top) + 'px;transform:translate(-50%,-50%) scale(0);animation:ripple 0.5s ease-out forwards;pointer-events:none;';
+      if (!document.getElementById('ripple-style')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-style';
+        style.textContent = '@keyframes ripple { to { transform:translate(-50%,-50%) scale(80); opacity:0; } }';
+        document.head.appendChild(style);
+      }
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 500);
+    });
+  </script>
+
+</body>
+</html>
